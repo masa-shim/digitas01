@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone操作診断</title>
+    <style>
+        /* デザイン設定（前回と同じ） */
+        body { font-family: sans-serif; background-color: #f2f2f7; color: #1c1c1e; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { background-color: #ffffff; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); text-align: center; }
+        h1 { font-size: 22px; color: #007aff; margin-bottom: 20px; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #d1d1d6; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .btn-primary { background-color: #007aff; color: white; }
+        .btn-yes { background-color: #ff3b30; color: white; }
+        .btn-no { background-color: #34c759; color: white; }
+        .image-placeholder { width: 100%; height: 180px; background-color: #e5e5ea; border-radius: 10px; margin-bottom: 20px; overflow: hidden; display:flex; align-items:center; justify-content:center;}
+        .image-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="entry-screen">
+            <h1>お客様情報の入力</h1>
+            <p style="font-size:14px; color:#888;">診断を始める前に、ご連絡先を入力してください。</p>
+            <label>お名前</label><input type="text" id="input-name">
+            <label>電話番号</label><input type="tel" id="input-phone">
+            <label>メールアドレス</label><input type="email" id="input-email">
+            <label>都道府県</label>
+            <select id="input-pref">
+                <option value="">選択してください</option>
+                <option value="北海道">北海道</option>
+                <option value="東京都">東京都</option>
+                <option value="大阪府">大阪府</option>
+                <option value="福岡県">福岡県</option>
+                <option value="その他">その他</option>
+            </select>
+            <button class="btn btn-primary" onclick="validateAndStart()">次へ進む</button>
+        </div>
+
+        <div id="start-screen" class="hidden">
+            <div class="image-placeholder"><img src="https://via.placeholder.com/400x200/007aff/ffffff?text=Start" alt=""></div>
+            <h1>iPhone操作診断</h1>
+            <p>ようこそ、<span id="user-name-display" style="font-weight:bold; color:#007aff;"></span> 様。</p>
+            <button class="btn btn-primary" onclick="startQuiz()">診断スタート</button>
+        </div>
+
+        <div id="question-screen" class="hidden">
+            <p id="question-number">質問 1</p>
+            <h2 id="question-text">質問</h2>
+            <button class="btn btn-yes" onclick="answer(true)">Yes</button>
+            <button class="btn btn-no" onclick="answer(false)">No</button>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <div class="image-placeholder"><img id="result-image" src="" alt=""></div>
+            <h1 id="result-title">診断結果</h1>
+            <p id="result-text" style="text-align: left;"></p>
+            <p id="sending-msg" style="font-size:12px; color:#888; margin-top:20px;">データ送信中...</p>
+        </div>
+    </div>
+
+    <script>
+        // ★★★ ここだけ書き換えてください！ ★★★
+        // ステップ1でコピーしたURLを、下の「""」の中に貼り付けてください
+        const FORMSPREE_URL = "https://formspree.io/f/xblqlblz"; 
+        // ★★★★★★★★★★★★★★★★★★★★★
+
+        const questions = [
+            "iPhoneに対し全般的に苦手意識が強い。",
+            "ネットで調べる機会が少ない。",
+            "ネットでの予約、手続き、買い物などうまくできない。",
+            "困った時にどこに問い合わせたらいいかわからない。",
+            "様々なID、パスワードを管理していない。",
+            "「認証」がよくわからない。",
+            "iPhoneで何のサービスを利用しているかよくわからない。",
+            "バックアップのとり方がよくわからない。",
+            "2段階認証がよくわからない。",
+            "「ウィルスに感染」のような表示が出ると不安になる。"
+        ];
+
+        let currentQuestionIndex = 0;
+        let yesCount = 0;
+        let userData = {};
+
+        function validateAndStart() {
+            const name = document.getElementById('input-name').value;
+            const phone = document.getElementById('input-phone').value;
+            const email = document.getElementById('input-email').value;
+            const pref = document.getElementById('input-pref').value;
+
+            if(name === "" || phone === "" || pref === "") {
+                alert("お名前、電話番号、都道府県は必須です。");
+                return;
+            }
+            userData = { name, phone, email, pref };
+            document.getElementById('user-name-display').innerText = name;
+            document.getElementById('entry-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('question-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('question-number').innerText = `質問 ${currentQuestionIndex + 1} / ${questions.length}`;
+            document.getElementById('question-text').innerText = questions[currentQuestionIndex];
+        }
+
+        function answer(isYes) {
+            if (isYes) yesCount++;
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('question-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            let title, text, imageUrl, resultType;
+            if (yesCount >= 6) {
+                resultType = "要情報介護";
+                title = "⚠️ 要情報介護です";
+                text = "普段使う中で困る場面が多いと思われます。\nサービス利用不可、データ消失、詐欺被害などに注意が必要です。";
+                imageUrl = "https://via.placeholder.com/400x200/ff3b30/ffffff?text=DANGER"; 
+            } else if (yesCount >= 3) {
+                resultType = "要情報介護予備軍";
+                title = "🤔 要情報介護予備軍です";
+                text = "普段は問題なく利用できていても、突発的なトラブルが起こる可能性があります。";
+                imageUrl = "https://via.placeholder.com/400x200/ffcc00/ffffff?text=WARNING";
+            } else {
+                resultType = "トラブル少なめ";
+                title = "✨ トラブルは少ないでしょう";
+                text = "iPhoneを利用する中でトラブルは少ないでしょう。\n苦手な部分を明確にすれば今後も問題なく利用できます。";
+                imageUrl = "https://via.placeholder.com/400x200/34c759/ffffff?text=EXCELLENT";
+            }
+
+            document.getElementById('result-title').innerText = title;
+            document.getElementById('result-text').innerText = text;
+            document.getElementById('result-image').src = imageUrl;
+
+            sendDataToFormspree(resultType);
+        }
+
+        function sendDataToFormspree(resultType) {
+            // Formspreeに送るデータを作成
+            const data = {
+                お名前: userData.name,
+                電話番号: userData.phone,
+                メール: userData.email,
+                都道府県: userData.pref,
+                診断結果タイプ: resultType,
+                Yesの数: yesCount
+            };
+
+            fetch(FORMSPREE_URL, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('sending-msg').innerText = "✅ データ送信完了（担当者に通知されました）";
+                } else {
+                    document.getElementById('sending-msg').innerText = "❌ 送信エラーが発生しました";
+                }
+            })
+            .catch(error => {
+                document.getElementById('sending-msg').innerText = "❌ 送信エラーが発生しました";
+            });
+        }
+    </script>
+</body>
+</html>
