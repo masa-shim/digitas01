@@ -11,7 +11,7 @@
         h1 { font-size: 22px; color: #007aff; margin-bottom: 20px; }
         input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #d1d1d6; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
         label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; text-decoration: none; }
         .btn-primary { background-color: #007aff; color: white; }
         .btn-yes { background-color: #ff3b30; color: white; }
         .btn-no { background-color: #34c759; color: white; }
@@ -83,11 +83,15 @@
             <button class="btn btn-primary" onclick="validateAndStart()">次へ進む</button>
         </div>
 
-        <div id="start-screen" class="hidden">
-            <div class="image-placeholder"><img src="fst3.png" alt=""></div>
-            <h1>iPhone操作診断</h1>
-            <p>ようこそ、<span id="user-name-display" style="font-weight:bold; color:#007aff;"></span> 様。</p>
-            <button class="btn btn-primary" onclick="startQuiz()">診断スタート</button>
+        <div id="result-screen" class="hidden">
+            <div class="image-placeholder"><img id="result-image" src="" alt=""></div>
+            <h1 id="result-title">診断結果</h1>
+            <p id="result-text" style="text-align: left;"></p>
+
+            <a href="https://line.me/ti/p/YOUR_LINE_ID" target="_blank" class="btn" style="background-color:#06C755; color:white;">
+                専門家に相談 (LINE)
+            </a>
+            <p id="sending-msg" style="font-size:12px; color:#888; margin-top:20px;">データ送信中...</p>
         </div>
 
         <div id="question-screen" class="hidden">
@@ -228,6 +232,7 @@
 </body>
 
 </html>
+
 
 
 
