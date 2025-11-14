@@ -84,7 +84,7 @@
         </div>
 
         <div id="start-screen" class="hidden">
-            <div class="image-placeholder"><img src="fst.png" alt=""></div>
+            <div class="image-placeholder"><img src="fst2.png" alt=""></div>
             <h1>iPhone操作診断</h1>
             <p>ようこそ、<span id="user-name-display" style="font-weight:bold; color:#007aff;"></span> 様。</p>
             <button class="btn btn-primary" onclick="startQuiz()">診断スタート</button>
@@ -174,17 +174,17 @@
                 resultType = "要情報介護";
                 title = "⚠️ 要情報介護です";
                 text = "普段使う中で困る場面が多いと思われます。\nサービス利用不可、データ消失、詐欺被害などに注意が必要です。";
-                imageUrl = "https://via.placeholder.com/400x200/ff3b30/ffffff?text=DANGER"; 
+                imageUrl = "youkaigo.jpg"; 
             } else if (yesCount >= 3) {
                 resultType = "要情報介護予備軍";
                 title = "🤔 要情報介護予備軍です";
                 text = "普段は問題なく利用できていても、突発的なトラブルが起こる可能性があります。";
-                imageUrl = "https://via.placeholder.com/400x200/ffcc00/ffffff?text=WARNING";
+                imageUrl = "yobigun.jpg";
             } else {
                 resultType = "トラブル少なめ";
                 title = "✨ トラブルは少ないでしょう";
                 text = "iPhoneを利用する中でトラブルは少ないでしょう。\n苦手な部分を明確にすれば今後も問題なく利用できます。";
-                imageUrl = "https://via.placeholder.com/400x200/34c759/ffffff?text=EXCELLENT";
+                imageUrl = "sukunai.jpg";
             }
 
             document.getElementById('result-title').innerText = title;
@@ -228,4 +228,5 @@
 </body>
 
 </html>
+
 
