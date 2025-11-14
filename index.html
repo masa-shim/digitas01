@@ -11,6 +11,7 @@
         h1 { font-size: 22px; color: #007aff; margin-bottom: 20px; }
         input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #d1d1d6; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
         label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+        /* 修正点： text-decoration: none; を追加済み */
         .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; text-decoration: none; }
         .btn-primary { background-color: #007aff; color: white; }
         .btn-yes { background-color: #ff3b30; color: white; }
@@ -32,68 +33,63 @@
             <label>都道府県</label>
             <select id="input-pref">
                 <option value="">選択してください</option>
-                <option value="1">北海道</option>
-                <option value="2">青森県</option>
-                <option value="3">岩手県</option>
-                <option value="4">宮城県</option>
-                <option value="5">秋田県</option>
-                <option value="6">山形県</option>
-                <option value="7">福島県</option>
-                <option value="8">茨城県</option>
-                <option value="9">栃木県</option>
-                <option value="10">群馬県</option>
-                <option value="11">埼玉県</option>
-                <option value="12">千葉県</option>
-                <option value="13">東京都</option>
-                <option value="14">神奈川県</option>
-                <option value="15">新潟県</option>
-                <option value="16">富山県</option>
-                <option value="17">石川県</option>
-                <option value="18">福井県</option>
-                <option value="19">山梨県</option>
-                <option value="20">長野県</option>
-                <option value="21">岐阜県</option>
-                <option value="22">静岡県</option>
-                <option value="23">愛知県</option>
-                <option value="24">三重県</option>
-  <option value="25">滋賀県</option>
-  <option value="26">京都府</option>
-  <option value="27">大阪府</option>
-  <option value="28">兵庫県</option>
-  <option value="29">奈良県</option>
-  <option value="30">和歌山県</option>
-  <option value="31">鳥取県</option>
-  <option value="32">島根県</option>
-  <option value="33">岡山県</option>
-  <option value="34">広島県</option>
-  <option value="35">山口県</option>
-  <option value="36">徳島県</option>
-  <option value="37">香川県</option>
-  <option value="38">愛媛県</option>
-  <option value="39">高知県</option>
-  <option value="40">福岡県</option>
-  <option value="41">佐賀県</option>
-  <option value="42">長崎県</option>
-  <option value="43">熊本県</option>
-  <option value="44">大分県</option>
-  <option value="45">宮崎県</option>
-  <option value="46">鹿児島県</option>
-  <option value="47">沖縄県</option>
+                <option value="北海道">北海道</option>
+                <option value="青森県">青森県</option>
+                <option value="岩手県">岩手県</option>
+                <option value="宮城県">宮城県</option>
+                <option value="秋田県">秋田県</option>
+                <option value="山形県">山形県</option>
+                <option value="福島県">福島県</option>
+                <option value="茨城県">茨城県</option>
+                <option value="栃木県">栃木県</option>
+                <option value="群馬県">群馬県</option>
+                <option value="埼玉県">埼玉県</option>
+                <option value="千葉県">千葉県</option>
+                <option value="東京都">東京都</option>
+                <option value="神奈川県">神奈川県</option>
+                <option value="新潟県">新潟県</option>
+                <option value="富山県">富山県</option>
+                <option value="石川県">石川県</option>
+                <option value="福井県">福井県</option>
+                <option value="山梨県">山梨県</option>
+                <option value="長野県">長野県</option>
+                <option value="岐阜県">岐阜県</option>
+                <option value="静岡県">静岡県</option>
+                <option value="愛知県">愛知県</option>
+                <option value="三重県">三重県</option>
+                <option value="滋賀県">滋賀県</option>
+                <option value="京都府">京都府</option>
+                <option value="大阪府">大阪府</option>
+                <option value="兵庫県">兵庫県</option>
+                <option value="奈良県">奈良県</option>
+                <option value="和歌山県">和歌山県</option>
+                <option value="鳥取県">鳥取県</option>
+                <option value="島根県">島根県</option>
+                <option value="岡山県">岡山県</option>
+                <option value="広島県">広島県</option>
+                <option value="山口県">山口県</option>
+                <option value="徳島県">徳島県</option>
+                <option value="香川県">香川県</option>
+                <option value="愛媛県">愛媛県</option>
+                <option value="高知県">高知県</option>
+                <option value="福岡県">福岡県</option>
+                <option value="佐賀県">佐賀県</option>
+                <option value="長崎県">長崎県</option>
+                <option value="熊本県">熊本県</option>
+                <option value="大分県">大分県</option>
+                <option value="宮崎県">宮崎県</option>
+                <option value="鹿児島県">鹿児島県</option>
+                <option value="沖縄県">沖縄県</option>
             </select>
             <button class="btn btn-primary" onclick="validateAndStart()">次へ進む</button>
         </div>
 
-        <div id="result-screen" class="hidden">
-            <div class="image-placeholder"><img id="result-image" src="" alt=""></div>
-            <h1 id="result-title">診断結果</h1>
-            <p id="result-text" style="text-align: left;"></p>
-
-            <a href="https://line.me/ti/p/YOUR_LINE_ID" target="_blank" class="btn" style="background-color:#06C755; color:white;">
-                専門家に相談 (LINE)
-            </a>
-            <p id="sending-msg" style="font-size:12px; color:#888; margin-top:20px;">データ送信中...</p>
+        <div id="start-screen" class="hidden">
+            <div class="image-placeholder"><img src="https://via.placeholder.com/400x200/007aff/ffffff?text=Start" alt=""></div>
+            <h1>iPhone操作診断</h1>
+            <p>ようこそ、<span id="user-name-display" style="font-weight:bold; color:#007aff;"></span> 様。</p>
+            <button class="btn btn-primary" onclick="startQuiz()">診断スタート</button>
         </div>
-
         <div id="question-screen" class="hidden">
             <p id="question-number">質問 1</p>
             <h2 id="question-text">質問</h2>
@@ -104,7 +100,11 @@
         <div id="result-screen" class="hidden">
             <div class="image-placeholder"><img id="result-image" src="" alt=""></div>
             <h1 id="result-title">診断結果</h1>
-            <p id="result-text" style="text-align: left;"></p>
+            <p id="result-text" style="text-align: left; white-space: pre-wrap;"></p>
+
+            <a href="https://line.me/ti/p/YOUR_LINE_ID" target="_blank" class="btn" style="background-color:#06C755; color:white;">
+                専門家に相談 (LINE)
+            </a>
             <p id="sending-msg" style="font-size:12px; color:#888; margin-top:20px;">データ送信中...</p>
         </div>
     </div>
@@ -143,9 +143,13 @@
                 return;
             }
             userData = { name, phone, email, pref };
+            
+            // ★★★ エラーの原因だった箇所 ★★★
+            // `start-screen` がHTMLに無かったので、ここでエラーになっていました
             document.getElementById('user-name-display').innerText = name;
             document.getElementById('entry-screen').classList.add('hidden');
             document.getElementById('start-screen').classList.remove('hidden');
+            // ★★★★★★★★★★★★★★★★★★★
         }
 
         function startQuiz() {
@@ -178,7 +182,7 @@
                 resultType = "要情報介護";
                 title = "⚠️ 要情報介護です";
                 text = "普段使う中で困る場面が多いと思われます。\nサービス利用不可、データ消失、詐欺被害などに注意が必要です。";
-                imageUrl = "youkaigo.jpg"; 
+                imageUrl = "youkaigo.jpg"; // (画像ファイル名はそのままにしてあります)
             } else if (yesCount >= 3) {
                 resultType = "要情報介護予備軍";
                 title = "🤔 要情報介護予備軍です";
@@ -204,7 +208,7 @@
                 お名前: userData.name,
                 電話番号: userData.phone,
                 メール: userData.email,
-                都道府県: userData.pref,
+                都道府県: userData.pref, // (ここで「北海道」などのテキストが送られます)
                 診断結果タイプ: resultType,
                 Yesの数: yesCount
             };
@@ -230,9 +234,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
-
-
